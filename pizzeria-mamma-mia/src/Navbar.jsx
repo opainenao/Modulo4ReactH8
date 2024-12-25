@@ -1,33 +1,27 @@
 import React from 'react';
 
-const formatPrice = (price) => price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
-
-const Navbar = () => {
-  const total = 25000;
-  const token = false;
-
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-      <a className="navbar-brand" href="#">Pizzería Mamma Mia</a>
-      <div className="d-flex align-items-center">
-        <button className="btn btn-outline-primary text-white">🍕 Home</button>
-        {token ? (
-          <>
-            <button className="btn btn-outline-success">🔓 Prole</button>
-            <button className="btn btn-outline-danger">🔒 Logout</button>
-          </>
-        ) : (
-          <>
-            <button className="btn btn-outline-warning text-white">🔐 Login</button>
-            <button className="btn btn-outline-warning text-white">🔐 Register</button>
-          </>
-        )}
-        <button className="btn btn-outline-info mx-1" style={{ marginLeft: 'auto' }}>
-          🛒 Total: {formatPrice(total)}
+const Navbar = ({ onLoginClick, onRegisterClick, onHomeClick }) => (
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div className="container d-flex justify-content-between align-items-center">
+      <a className="navbar-brand" href="#" onClick={onHomeClick}>
+        🍕 Pizzería Mamma Mia
+      </a>
+      <div>
+        <button
+          className="btn btn-warning mx-1"
+          onClick={onLoginClick}
+        >
+          🔐 Login
+        </button>
+        <button
+          className="btn btn-warning mx-1"
+          onClick={onRegisterClick}
+        >
+          📝 Register
         </button>
       </div>
-    </nav>
-  );
-};
+    </div>
+  </nav>
+);
 
 export default Navbar;

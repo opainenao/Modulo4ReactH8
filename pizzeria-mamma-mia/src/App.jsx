@@ -2,25 +2,33 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Home from './Home';
 import Footer from './Footer';
-import Register from './register';
+import Register from './Register';
 import Login from './Login';
+import Cart from './Cart';
 
-//hito 2
-{/*const App = () => {
-  return (
-  <div>
-  <Navbar />
-  <Home />
-  <RegisterPage />
-  <Footer />
-  </div>
-  );
- */ };
-  
+function App() {
+  const [currentView, setCurrentView] = useState('home');
+  const [cart, setCart] = useState([]);
 
- function App() {
-  // Estado para manejar vistas
-  const [currentView, setCurrentView] = useState('home'); 
+  const updateCart = (updatedCart) => {
+    setCart(updatedCart);
+  };
+
+  // Función para añadir pizza al carrito
+  const addToCart = (pizza) => {
+    setCart((prevCart) => {
+      const existingPizza = prevCart.find(item => item.name === pizza.name);
+      if (existingPizza) {
+        return prevCart.map(item =>
+          item.name === pizza.name
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...pizza, quantity: 1 }];
+      }
+    });
+  };
 
   const renderContent = () => {
     switch (currentView) {
@@ -28,9 +36,11 @@ import Login from './Login';
         return <Login onBackToHome={() => setCurrentView('home')} />;
       case 'register':
         return <Register onBackToHome={() => setCurrentView('home')} />;
+      case 'cart':
+        return <Cart cart={cart} updateCart={updateCart} onBackToHome={() => setCurrentView('home')} />;
       case 'home':
       default:
-        return <Home />;
+        return <Home addToCart={addToCart} />;
     }
   };
 
@@ -40,6 +50,7 @@ import Login from './Login';
         onLoginClick={() => setCurrentView('login')}
         onRegisterClick={() => setCurrentView('register')}
         onHomeClick={() => setCurrentView('home')}
+        onCartClick={() => setCurrentView('cart')}
       />
       <div className="d-flex justify-content-center align-items-center flex-grow-1">
         {renderContent()}

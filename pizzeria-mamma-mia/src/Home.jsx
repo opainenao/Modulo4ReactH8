@@ -1,8 +1,9 @@
 import React from 'react';
 import Header from './Header';
 import CardPizza from './CardPizza';
+import pizzas from './assets/pizzas'; // Asegúrate de importar pizzas
 
-const pizzas = [
+/*const pizzas = [
   {
     name: 'Napolitana',
     price: 5950,
@@ -21,14 +22,15 @@ const pizzas = [
     ingredients: ['mozzarella', 'pepperoni', 'orégano'],
     img: 'https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3',
   },
-];
+];*/
 
-const Home = () => (
+
+const Home = ({ addToCart }) => (
   <div>
     <Header />
     <div className="d-flex justify-content-around flex-wrap">
       {pizzas.map((pizza, index) => (
-        <CardPizza key={index} {...pizza} />
+        <CardPizza key={index} {...pizza} addToCart={addToCart} />
       ))}
     </div>
   </div>

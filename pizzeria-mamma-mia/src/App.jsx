@@ -3,12 +3,14 @@ import Navbar from './Navbar';
 import Home from './Home';
 import Footer from './Footer';
 import Register from './Register';
-import Login from './Login';
+//import Login from './Login';
 import Cart from './Cart';
+import Pizza from './Pizza';
 
 function App() {
   const [currentView, setCurrentView] = useState('home');
   const [cart, setCart] = useState([]);
+  const [selectedPizzaId, setSelectedPizzaId] = useState(null);
 
   const updateCart = (updatedCart) => {
     setCart(updatedCart);
@@ -31,6 +33,13 @@ function App() {
   };
 
   const renderContent = () => {
+    if (selectedPizzaId) {
+      return <Pizza pizzaId={selectedPizzaId} addToCart={addToCart} onBackToHome={() => {
+        setSelectedPizzaId(null);
+        setCurrentView('home');
+      }} />;
+    }
+
     switch (currentView) {
       case 'login':
         return <Login onBackToHome={() => setCurrentView('home')} />;
@@ -40,7 +49,7 @@ function App() {
         return <Cart cart={cart} updateCart={updateCart} onBackToHome={() => setCurrentView('home')} />;
       case 'home':
       default:
-        return <Home addToCart={addToCart} />;
+        return <Home addToCart={addToCart} setSelectedPizzaId={setSelectedPizzaId} />;
     }
   };
 
@@ -49,7 +58,10 @@ function App() {
       <Navbar
         onLoginClick={() => setCurrentView('login')}
         onRegisterClick={() => setCurrentView('register')}
-        onHomeClick={() => setCurrentView('home')}
+        onHomeClick={() => {
+          setSelectedPizzaId(null);
+          setCurrentView('home');
+        }}
         onCartClick={() => setCurrentView('cart')}
       />
       <div className="d-flex justify-content-center align-items-center flex-grow-1">

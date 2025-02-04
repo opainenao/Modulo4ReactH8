@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
-import Home from './Home';
-import Footer from './Footer';
-import Register from './Register';
-//import Login from './Login';
-import Cart from './Cart';
-import Pizza from './Pizza';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Footer from './components/Footer';
+import Register from './pages/Register';
+import Cart from './pages/Cart';
+import Pizza from './pages/Pizza';
+import Login from './pages/Login';
+import Profile from './pages/Profile'; 
+import NotFound from './pages/NotFound'; 
 
 function App() {
-  const [currentView, setCurrentView] = useState('home');
   const [cart, setCart] = useState([]);
   const [selectedPizzaId, setSelectedPizzaId] = useState(null);
 
-  const updateCart = (updatedCart) => {
-    setCart(updatedCart);
-  };
-
-  // Función para añadir pizza al carrito
   const addToCart = (pizza) => {
     setCart((prevCart) => {
       const existingPizza = prevCart.find(item => item.name === pizza.name);
@@ -32,40 +29,19 @@ function App() {
     });
   };
 
-  const renderContent = () => {
-    if (selectedPizzaId) {
-      return <Pizza pizzaId={selectedPizzaId} addToCart={addToCart} onBackToHome={() => {
-        setSelectedPizzaId(null);
-        setCurrentView('home');
-      }} />;
-    }
-
-    switch (currentView) {
-      case 'login':
-        return <Login onBackToHome={() => setCurrentView('home')} />;
-      case 'register':
-        return <Register onBackToHome={() => setCurrentView('home')} />;
-      case 'cart':
-        return <Cart cart={cart} updateCart={updateCart} onBackToHome={() => setCurrentView('home')} />;
-      case 'home':
-      default:
-        return <Home addToCart={addToCart} setSelectedPizzaId={setSelectedPizzaId} />;
-    }
-  };
-
   return (
     <div className="d-flex flex-column justify-content-between min-vh-100">
-      <Navbar
-        onLoginClick={() => setCurrentView('login')}
-        onRegisterClick={() => setCurrentView('register')}
-        onHomeClick={() => {
-          setSelectedPizzaId(null);
-          setCurrentView('home');
-        }}
-        onCartClick={() => setCurrentView('cart')}
-      />
+      <Navbar />
       <div className="d-flex justify-content-center align-items-center flex-grow-1">
-        {renderContent()}
+        <Routes>
+          <Route path="/" element={<Home addToCart={addToCart} setSelectedPizzaId={setSelectedPizzaId} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<Cart cart={cart} />} />
+          <Route path="/pizza/:id" element={<Pizza pizzaId={selectedPizzaId} addToCart={addToCart} />} />
+          <Route path="/profile" element={<Profile />} /> 
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
       <Footer />
     </div>

@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
-const Pizza = ({ pizzaId }) => {
-  const [pizza, setPizza] = useState(null);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/pizzas/${pizzaId}`)
-      .then((response) => response.json())
-      .then((data) => setPizza(data))
-      .catch((error) =>
-        console.error("Error al cargar los detalles de la pizza:", error)
-      );
-  }, [pizzaId]);
-
-  if (!pizza) {
-    return <p className="text-center">Cargando...</p>;
-  }
+const Pizza = () => {
+  const { id } = useParams();
+  const { addToCart } = useCart();
 
   return (
     <div className="container mt-4">

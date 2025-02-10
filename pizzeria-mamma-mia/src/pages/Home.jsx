@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
-import CardPizza from '../components/CardPizza';
+import React, { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
+//import React, { useEffect, useState } from 'react';
+//import Header from '../components/Header';
+//import CardPizza from '../components/CardPizza';
 
-const Home = ({ addToCart, setSelectedPizzaId }) => {
+const Home = () => {
+  const { addToCart } = useCart();
   const [pizzas, setPizzas] = useState([]);
 
+  
   useEffect(() => {
     const fetchPizzas = async () => {
       try {
@@ -22,7 +26,28 @@ const Home = ({ addToCart, setSelectedPizzaId }) => {
     fetchPizzas();
   }, []);
 
+
   return (
+    <div className="container mt-4">
+      <h2>Menú de Pizzas</h2>
+      <div className="row">
+        {pizzas.map((pizza) => (
+          <div key={pizza.id} className="col-md-4">
+            <div className="card p-3">
+              <h5>{pizza.name}</h5>
+              <p>Precio: ${pizza.price.toFixed(2)}</p>
+              <button className="btn btn-success" onClick={() => addToCart(pizza)}>
+                Añadir al carrito
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+ /* return (
     <div>
       <Header />
       <div className="d-flex justify-content-around flex-wrap">
@@ -41,6 +66,6 @@ const Home = ({ addToCart, setSelectedPizzaId }) => {
       </div>
     </div>
   );
-};
+*/
 
 export default Home;

@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
+
 const ProtectedRoute = ({ children }) => {
   const { token } = useUser();
   return token ? children : <Navigate to="/login" />;
@@ -42,6 +43,8 @@ function App() {
 }
 
 export default App;
+
+
 
 
 

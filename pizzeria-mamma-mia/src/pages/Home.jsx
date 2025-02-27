@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 //import React, { useEffect, useState } from 'react';
-//import Header from '../components/Header';
-//import CardPizza from '../components/CardPizza';
+import Header from '../components/Header';
+import CardPizza from '../components/CardPizza';
 
 const Home = () => {
   const { addToCart } = useCart();
   const [pizzas, setPizzas] = useState([]);
+  const [selectedPizzaId, setSelectedPizzaId] = useState(null);
+  //console.log('llego al Home')
 
   
   useEffect(() => {
@@ -26,9 +28,10 @@ const Home = () => {
     fetchPizzas();
   }, []);
 
-
+/*
   return (
     <div className="container mt-4">
+      <header/>
       <h2>Menú de Pizzas</h2>
       <div className="row">
         {pizzas.map((pizza) => (
@@ -45,7 +48,32 @@ const Home = () => {
       </div>
     </div>
   );
+};*/
+
+
+
+  return (
+    <div className="container mt-4">
+      <Header />
+      <h2>Menú de Pizzas</h2>
+      <div className="row d-flex justify-content-around flex-wrap">
+        {pizzas.length > 0 ? (
+          pizzas.map((pizza) => (
+            <CardPizza 
+              key={pizza.id} 
+              {...pizza} 
+              addToCart={addToCart} 
+              onPizzaClick={() => setSelectedPizzaId(pizza.id)}
+            />
+          ))
+        ) : (
+          <p className="text-center">Cargando pizzas...</p>
+        )}
+      </div>
+    </div>
+  );
 };
+
 
  /* return (
     <div>

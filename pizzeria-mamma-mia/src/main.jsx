@@ -1,15 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App'; // Importa tu componente principal
-import './index.css';
+//import ReactDOM from 'react-dom';
+//import ReactDOM from "react-dom/client";
+//import { createRoot } from "react-dom/client";
 
-ReactDOM.render(
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import { UserProvider } from "./context/UserContext";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
+import { BrowserRouter } from "react-router-dom";
+
+
+/*ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
+);*/
+
+/*ReactDOM.render(
+  <UserProvider>
+    <App />
+  </UserProvider>,
+  document.getElementById("root")
+);*/
+
+
+
+
+
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

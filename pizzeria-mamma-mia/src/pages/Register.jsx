@@ -111,15 +111,14 @@ const Register = ({ onBackToHome }) => {
 */
 
 
-import { useUser } from "../context/UserContext"; // Importa useUser
+import { useUser } from "../context/UserContext"; 
 
 
 const Register = () => {
   const { login } = useUser();
 
   const handleRegister = () => {
-    // Simulación de registro exitoso
-    login("token_de_prueba", "usuario@correo.com");
+    login("token_de_prueba", "test@test.com");
   };
 
   return (

@@ -8,7 +8,7 @@ const Login = ({ onBackToHome }) => {
   const [loading, setLoading] = useState(false);
   const { login } = useUser();
 
-  const handleLogin = async (e) => { // Agregado async aquí
+  const handleLogin = async (e) => { 
     e.preventDefault();
     setErrorMessage('');
     
